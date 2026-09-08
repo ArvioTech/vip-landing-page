@@ -1,14 +1,19 @@
-<!-- „Jak to probíhá": four numbered steps — 4 columns on desktop, 2×2 on tablet, stacked on phones.
+<!-- „Jak to probíhá": four numbered steps (step 2 mentions the benefit choice only in the choice variant) — 4 columns on desktop, 2×2 on tablet, stacked on phones.
      The 1px dividers are the grid gap showing the line-coloured background, so they follow every layout automatically. -->
 <script setup lang="ts">
-	const steps = [
+	const variant = useVariant();
+
+	const steps = computed(() => [
 		{
 			title: 'Pozvání',
 			text: 'Zavolali jsme vám a poslali odkaz na tuto stránku. Vstup do klubu je pouze na pozvání.',
 		},
 		{
 			title: 'Zájem',
-			text: 'Zanecháte e‑mail a vyberete výhodu, která vám sedí víc. Zabere to půl minuty.',
+			text:
+				variant.value === 'both'
+					? 'Zanecháte e‑mail a vyberete výhodu, která vám sedí víc. Zabere to půl minuty.'
+					: 'Zanecháte e‑mail a potvrdíte zájem. Zabere to půl minuty.',
 			now: true,
 		},
 		{
@@ -19,7 +24,7 @@
 			title: 'Přístup',
 			text: 'Přihlásíte se do portálu a rezervujete hotely s členskou výhodou na každé objednávce.',
 		},
-	];
+	]);
 </script>
 
 <template>

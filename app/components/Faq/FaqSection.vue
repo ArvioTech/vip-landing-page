@@ -25,7 +25,10 @@
 	const items = computed(() => [
 		{
 			q: 'K čemu se zadáním e‑mailu zavazuji?',
-			a: 'K ničemu. Jen nám říkáte, že vás klub zajímá a kterou výhodu byste si vybrali. Členství můžete kdykoli odmítnout.',
+			a:
+				variant.value === 'both'
+					? 'K ničemu. Jen nám říkáte, že vás klub zajímá a kterou výhodu byste si vybrali. Členství můžete kdykoli odmítnout.'
+					: 'K ničemu. Jen nám říkáte, že vás klub zajímá. Členství můžete kdykoli odmítnout.',
 		},
 		{
 			q: 'Kdy se mi ozvete?',

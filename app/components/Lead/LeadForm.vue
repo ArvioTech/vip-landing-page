@@ -1,4 +1,4 @@
-<!-- Lead form: e-mail · benefit choice (one or two options by variant) · consent · submit → POST /api/leads.
+<!-- Lead form: e-mail · benefit (two radio tiles in the choice variant, one static tile in sleva / cashback) · consent · submit → POST /api/leads.
      After a successful submit the form is replaced by a thank-you block: brass seal, what was sent, what happens next,
      and a way back in case of a typo in the e-mail. Emits `done` so the card can drop its own heading.
      Two layouts: stacked inside the registration card (default), or `band` — frameless, two columns on desktop, brass button. -->
@@ -16,8 +16,6 @@
 	const emailId = useId();
 	const benefitName = useId();
 
-	const showDiscount = computed(() => variant.value !== 'cashback');
-	const showCashback = computed(() => variant.value !== 'sleva');
 	const single = computed(() => variant.value !== 'both');
 
 	// Uppercase field label / legend — a touch quieter in the band
@@ -29,13 +27,21 @@
 	const email = ref('');
 	// Single-benefit variants come pre-selected; with both on offer the visitor has to pick
 	const benefit = ref<LeadPayload['benefit'] | undefined>(
-		single.value ? (showDiscount.value ? 'discount_3' : 'cashback_5') : undefined
+		variant.value === 'sleva' ? 'discount_3' : variant.value === 'cashback' ? 'cashback_5' : undefined
 	);
 	const consent = ref(false);
 
-	const benefitLabel: Record<NonNullable<LeadPayload['benefit']>, string> = {
-		discount_3: 'Sleva 3 % na všechny objednávky',
-		cashback_5: 'Cashback 5 % z každé objednávky',
+	const benefits: Record<NonNullable<LeadPayload['benefit']>, { title: string; hint: string; figure: string }> = {
+		discount_3: {
+			title: 'Sleva 3 % na všechny objednávky',
+			hint: 'Nižší cena rovnou při rezervaci, po celou dobu trvání klubu.',
+			figure: '3 %',
+		},
+		cashback_5: {
+			title: 'Cashback 5 % z každé objednávky',
+			hint: 'Po každém pobytu dostanete jednorázový voucher na další rezervaci.',
+			figure: '5 %',
+		},
 	};
 
 	/** What happens after the submit — steps 3 and 4 of „Jak to probíhá" */
@@ -121,7 +127,7 @@
 				<dt class="text-label font-semibold tracking-label text-muted uppercase">E‑mail</dt>
 				<dd class="min-w-0 truncate font-semibold text-primary">{{ email.trim() }}</dd>
 				<dt class="text-label font-semibold tracking-label text-muted uppercase">Výhoda</dt>
-				<dd class="font-semibold text-primary">{{ benefit ? benefitLabel[benefit] : '—' }}</dd>
+				<dd class="font-semibold text-primary">{{ benefit ? benefits[benefit].title : '—' }}</dd>
 				<dt class="text-label font-semibold tracking-label text-muted uppercase">Č. člena</dt>
 				<dd class="text-secondary">Přidělíme po ověření</dd>
 			</dl>
@@ -173,34 +179,37 @@
 			placeholder="jmeno@firma.cz"
 			required
 			:aria-invalid="emailInvalid || undefined"
-			class="w-full rounded-field border border-line-strong bg-surface-app p-4.5 text-lead text-primary placeholder:text-muted focus:border-brass focus:ring-4 focus:ring-brass-soft focus:outline-none aria-invalid:border-danger tablet:text-input"
+			class="w-full rounded-field border border-line-strong bg-surface-app p-4.5 text-lead text-primary placeholder:text-muted focus:border-brass focus:outline-none aria-invalid:border-danger tablet:text-input"
 			:class="band && 'desktop:[grid-area:email]'"
 		/>
 
-		<fieldset class="mt-6.5" :class="band && 'desktop:mt-0 desktop:[grid-area:opts]'">
-			<legend :class="[labelClass, 'mb-2.5']">
-				{{ single ? 'Vaše členská výhoda' : 'Která výhoda vás zajímá?' }}
-			</legend>
+		<!-- Single-benefit variants: the benefit is given, so it is shown as a static tile, not a lone radio -->
+		<div v-if="single && benefit" class="mt-6.5" :class="band && 'desktop:mt-0 desktop:[grid-area:opts]'">
+			<p :class="[labelClass, 'mb-2.5']">Vaše členská výhoda</p>
+			<div
+				class="grid grid-cols-[auto_1fr] items-start gap-x-3.5 gap-y-1 rounded-field border border-brass bg-brass-soft px-4.5 py-4"
+			>
+				<span class="row-span-2 font-display text-display-sm leading-none text-brass tabular-nums">{{
+					benefits[benefit].figure
+				}}</span>
+				<strong class="text-body font-semibold">{{ benefits[benefit].title }}</strong>
+				<small class="text-caption text-muted">{{ benefits[benefit].hint }}</small>
+			</div>
+		</div>
+
+		<fieldset v-else class="mt-6.5" :class="band && 'desktop:mt-0 desktop:[grid-area:opts]'">
+			<legend :class="[labelClass, 'mb-2.5']">Která výhoda vás zajímá?</legend>
 			<div class="grid gap-2.5" :class="band && 'grid-cols-[repeat(auto-fit,minmax(200px,1fr))]'">
 				<LeadBenefitOption
-					v-if="showDiscount"
+					v-for="(item, key) in benefits"
+					:key="key"
 					v-model="benefit"
 					:name="benefitName"
-					value="discount_3"
+					:value="key"
 					:plain="band"
-					title="Sleva 3 % na všechny objednávky"
-					hint="Nižší cena rovnou při rezervaci, po celou dobu trvání klubu."
-					figure="3 %"
-				/>
-				<LeadBenefitOption
-					v-if="showCashback"
-					v-model="benefit"
-					:name="benefitName"
-					value="cashback_5"
-					:plain="band"
-					title="Cashback 5 % z každé objednávky"
-					hint="Po každém pobytu dostanete jednorázový voucher na další rezervaci."
-					figure="5 %"
+					:title="item.title"
+					:hint="item.hint"
+					:figure="item.figure"
 				/>
 			</div>
 		</fieldset>

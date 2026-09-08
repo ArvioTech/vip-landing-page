@@ -2,6 +2,25 @@
 <script setup lang="ts">
 	const variant = useVariant();
 
+	/** Headline — the cashback variant leads with the voucher instead of "členské ceny" */
+	const headline = computed(() =>
+		variant.value === 'cashback'
+			? { a: 'Z každého pobytu 5 % zpět.', em: 'Bez hledání slev,', b: 'po celou dobu členství.' }
+			: { a: 'Hotely za členské ceny.', em: 'Bez hledání slev,', b: 'po celou dobu členství.' }
+	);
+
+	/** Lead paragraph — only the choice variant asks the visitor to pick a benefit */
+	const lead = computed(() => {
+		switch (variant.value) {
+			case 'sleva':
+				return 'Připravujeme klub, kde členové rezervují hotely se slevou 3 % na každé objednávce. Zatím zjišťujeme zájem: zanechte e‑mail a my ověříme váš přístup.';
+			case 'cashback':
+				return 'Připravujeme klub, kde členové z každé rezervace hotelu dostanou 5 % zpět formou voucheru. Zatím zjišťujeme zájem: zanechte e‑mail a my ověříme váš přístup.';
+			default:
+				return 'Připravujeme klub, kde členové rezervují hotely s trvalou výhodou na každé objednávce. Zatím zjišťujeme zájem: zanechte e‑mail, vyberte výhodu, která vám dává větší smysl, a my ověříme váš přístup.';
+		}
+	});
+
 	const benefitPerk = computed(() => {
 		switch (variant.value) {
 			case 'sleva':
@@ -21,12 +40,9 @@
 		<div>
 			<CommonEyebrow>Uzavřený klub pro rezervace hotelů</CommonEyebrow>
 			<h1 class="mt-3.5 mb-5.5 font-display text-hero font-normal tracking-display text-balance">
-				Hotely za členské ceny. <em class="text-brass">Bez hledání slev,</em> po celou dobu členství.
+				{{ headline.a }} <em class="text-brass">{{ headline.em }}</em> {{ headline.b }}
 			</h1>
-			<p class="mb-8.5 max-w-lead text-lead text-secondary">
-				Připravujeme klub, kde členové rezervují hotely s trvalou výhodou na každé objednávce. Zatím zjišťujeme
-				zájem: zanechte e‑mail, vyberte výhodu, která vám dává větší smysl, a my ověříme váš přístup.
-			</p>
+			<p class="mb-8.5 max-w-lead text-lead text-secondary">{{ lead }}</p>
 
 			<ul class="border-t border-line">
 				<li class="grid grid-cols-[26px_1fr] gap-4 border-b border-line py-4.5">

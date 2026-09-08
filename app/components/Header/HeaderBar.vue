@@ -1,9 +1,12 @@
 <!-- Page header: brand (brass seal + DzB Premium wordmark) · invite-only note (hidden on phones) -->
-<script setup lang="ts"></script>
+<script setup lang="ts">
+	/** The logo link keeps the query so the A/B variant (?v=…) is not lost on click */
+	const route = useRoute();
+</script>
 
 <template>
 	<header class="flex items-center justify-between gap-6 border-b border-line pt-6.5 pb-5.5">
-		<NuxtLink to="/" class="flex items-center gap-3 no-underline">
+		<NuxtLink :to="{ path: '/', query: route.query }" class="flex items-center gap-3 no-underline">
 			<span
 				class="grid size-8.5 place-items-center rounded-full border border-brass font-display text-meta text-brass"
 				aria-hidden="true"
