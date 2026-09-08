@@ -1,0 +1,238 @@
+@import 'tailwindcss';
+
+/*
+ * V.I.P. Hotelový klub — design tokens, transferred from the landing-page design
+ * (Claude artifact 2ff0c5f8). Tailwind v4 configuration + a minimal base layer —
+ * no component styles here.
+ *
+ * Theming: the design has a light "hotel canvas" look, a full dark mode and an
+ * inverse band (the bottom CTA) that swaps the two. Every color therefore lives as
+ * a runtime variable (--t-*) written with light-dark(), and Tailwind only points at
+ * it (@theme inline). `bg-surface-app` follows the mode automatically, and the
+ * `theme-inverse` utility flips a whole subtree by flipping its color-scheme.
+ *
+ * Mode: system by default (color-scheme: light dark). A future toggle stamps
+ * data-theme="light" | "dark" on <html> and everything follows — no class juggling.
+ */
+
+/* ---------- Runtime palette (light value, dark value) ---------- */
+:root {
+	color-scheme: light dark;
+	--scheme-inverse: dark; /* the opposite of the current mode — see theme-inverse */
+
+	/* Surfaces */
+	--t-surface-app: light-dark(#f4f0e8, #0e1626); /* page background, form fields */
+	--t-surface-nested: light-dark(#ebe5d8, #131d31); /* benefit tiles (Sleva / Cashback) */
+	--t-surface-card: light-dark(#fbf9f4, #16213a); /* the registration card */
+	--t-surface-band: light-dark(#ebe5d8, #0e1626); /* the inverse CTA band — only inside theme-inverse */
+
+	/* Text — text-primary, text-secondary, text-muted */
+	--t-primary: light-dark(#10192a, #f3eee3); /* ink */
+	--t-secondary: light-dark(#3d4757, #cfc7b8); /* body copy */
+	--t-muted: light-dark(#6e7787, #8e97a6); /* captions, fine print, placeholders */
+
+	/* Lines — the design draws 1px rules everywhere instead of shadows */
+	--t-line: light-dark(#d9d1c1, #263248); /* separators, card border */
+	--t-line-strong: light-dark(#b9af9b, #3b4a66); /* field borders, steps top rule */
+
+	/* Brass accent — eyebrows, italic emphasis, numbers, focus, hover */
+	--t-brass: light-dark(#9a7a3e, #c9a86a);
+	--t-brass-strong: light-dark(#7e6330, #e2c589); /* button hover */
+	--t-brass-soft: light-dark(rgb(154 122 62 / 0.14), rgb(201 168 106 / 0.16)); /* selected option fill, focus halo */
+	--t-on-brass: light-dark(#fbf9f4, #10192a); /* text on a brass button */
+
+	/* States */
+	--t-success: light-dark(#2f6b4f, #7fc9a3);
+	--t-danger: light-dark(#a23b2e, #e28b7e);
+
+	/* Card shadow — the only shadow in the design */
+	--t-shadow-card:
+		0 30px 60px -30px light-dark(rgb(16 25 42 / 0.35), rgb(0 0 0 / 0.7)),
+		0 2px 0 light-dark(rgb(16 25 42 / 0.04), rgb(255 255 255 / 0.04));
+}
+
+:root[data-theme='light'] {
+	color-scheme: light;
+	--scheme-inverse: dark;
+}
+
+:root[data-theme='dark'] {
+	color-scheme: dark;
+	--scheme-inverse: light;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) {
+		--scheme-inverse: light;
+	}
+}
+
+/* Inverse band (bottom CTA): flips the color-scheme so every light-dark() token
+   above resolves to the other mode. Only the values that are *not* plain mirrors
+   in the design are overridden here. Utility, so it composes: `theme-inverse bg-surface-band`. */
+@utility theme-inverse {
+	color-scheme: var(--scheme-inverse);
+	--t-surface-app: light-dark(#f4f0e8, #16213a); /* fields inside the band */
+	--t-surface-nested: light-dark(#e4decf, #131d31);
+	--t-surface-card: transparent; /* the card loses its frame in the band */
+	--t-line: light-dark(#d3cbb9, #263248);
+	--t-shadow-card: 0 0 #0000; /* not `none` — it sits inside Tailwind's shadow list */
+}
+
+/* `dark:` variant — same rules as the palette (system, overridable by data-theme).
+   Prefer the tokens above; use this only for non-color tweaks. */
+@custom-variant dark {
+	&:where([data-theme='dark'], [data-theme='dark'] *) {
+		@slot;
+	}
+	@media (prefers-color-scheme: dark) {
+		&:where(:not([data-theme='light'], [data-theme='light'] *)) {
+			@slot;
+		}
+	}
+}
+
+/* ---------- Tailwind tokens that follow the runtime palette ---------- */
+@theme inline {
+	/* Default palette is wiped: color has meaning in this design — only tokens below exist.
+	   (transparent / current / inherit remain available) */
+	--color-*: initial;
+
+	--color-surface-app: var(--t-surface-app);
+	--color-surface-nested: var(--t-surface-nested);
+	--color-surface-card: var(--t-surface-card);
+	--color-surface-band: var(--t-surface-band);
+
+	--color-primary: var(--t-primary);
+	--color-secondary: var(--t-secondary);
+	--color-muted: var(--t-muted);
+
+	--color-line: var(--t-line);
+	--color-line-strong: var(--t-line-strong);
+
+	--color-brass: var(--t-brass);
+	--color-brass-strong: var(--t-brass-strong);
+	--color-brass-soft: var(--t-brass-soft);
+	--color-on-brass: var(--t-on-brass);
+
+	--color-success: var(--t-success);
+	--color-danger: var(--t-danger);
+
+	--shadow-*: initial;
+	--shadow-card: var(--t-shadow-card);
+}
+
+/* ---------- Static tokens ---------- */
+@theme {
+	/* Fonts — Fraunces for display (headings, big numbers, brand; italic = brass emphasis),
+	   Karla for everything else. Loaded by @nuxt/fonts (see nuxt.config.ts). */
+	--font-*: initial;
+	--font-sans: 'Karla', 'Helvetica Neue', Arial, ui-sans-serif, sans-serif;
+	--font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+
+	/* Font sizes — whole px only; the design's fractional sizes (13.5 / 14.5 / 15.5)
+	   and its global 0.97 display scale are snapped to the nearest step.
+	   Scale: 12 / 13 / 14 / 15 / 16 / 17 / 19 / 21 / 22 / 23 / 30 / 34 / 44 / 72 + 3 fluid headings. */
+	--text-*: initial;
+	--text-micro: 12px; /* eyebrow, member no., „Právě teď" badge — uppercase + tracking */
+	--text-micro--line-height: 1.4;
+	--text-label: 13px; /* field labels, legends, header note, fine print — uppercase labels weight 600 */
+	--text-label--line-height: 1.4;
+	--text-caption: 14px; /* consent, footer, error, option hint, example, summary rows */
+	--text-caption--line-height: 1.45;
+	--text-meta: 15px; /* perk / step / plan / FAQ body, card subtitle, CTA points */
+	--text-meta--line-height: 1.5;
+	--text-body: 16px; /* option title, weight 600 */
+	--text-body--line-height: 1.5;
+	--text-base: 17px; /* body default, step & FAQ headings, submit button */
+	--text-base--line-height: 1.55;
+	--text-lead: 19px; /* hero lead paragraph; e-mail field on phones */
+	--text-lead--line-height: 1.55;
+	--text-brand: 21px; /* brand name in the header, display */
+	--text-brand--line-height: 1.2;
+	--text-input: 22px; /* e-mail field */
+	--text-input--line-height: 1.3;
+	--text-plan-title: 23px; /* benefit tile heading, display */
+	--text-plan-title--line-height: 1.2;
+	--text-card-title: 30px; /* registration card h2, display; also the „%" next to the 72px number */
+	--text-card-title--line-height: 1.12;
+	--text-display-sm: 34px; /* thanks h2, option „3 %" numeral (use leading-none) */
+	--text-display-sm--line-height: 1.12;
+	--text-display-md: 44px; /* step number */
+	--text-display-md--line-height: 1;
+	--text-display-lg: 72px; /* benefit tile number */
+	--text-display-lg--line-height: 0.9;
+	--text-section: clamp(30px, 3.4vw, 40px); /* section h2 */
+	--text-section--line-height: 1.12;
+	--text-cta: clamp(32px, 3.8vw, 46px); /* CTA band h2 */
+	--text-cta--line-height: 1.12;
+	--text-hero: clamp(42px, 5.4vw, 68px); /* hero h1 */
+	--text-hero--line-height: 1.06;
+
+	/* Letter spacing — tracking-display on every Fraunces heading, the rest on small caps labels */
+	--tracking-*: initial;
+	--tracking-display: -0.015em;
+	--tracking-brand: 0.01em;
+	--tracking-button: 0.02em;
+	--tracking-label: 0.04em; /* field labels, legends */
+	--tracking-micro: 0.08em; /* member no. */
+	--tracking-badge: 0.12em; /* „Právě teď" */
+	--tracking-eyebrow: 0.14em;
+
+	/* Radii — the design is sharp: cards and tiles have none, fields/options/buttons 4px */
+	--radius-*: initial;
+	--radius-field: 4px;
+	--radius-focus: 2px; /* focus-visible outline */
+	--radius-pill: 999px; /* „Právě teď" badge */
+
+	/* Widths — max-w-wrap is the page column, the rest are copy measures */
+	--container-*: initial;
+	--container-wrap: 1200px; /* page column: min(1200px, 100% - 48px); 100% - 32px on phones */
+	--container-plan: 560px; /* single benefit tile in the sleva/cashback variants */
+	--container-lead: 34em; /* hero lead */
+	--container-copy: 36em; /* section intro paragraph */
+	--container-note: 40em; /* thanks block in the band */
+
+	/* Breakpoints (mobile-first) — the design breaks at 560 and 900. Default sm…2xl scale is wiped.
+	   ≥ tablet: steps 2 columns, header note visible · ≥ desktop: hero/compare/FAQ 2 columns, sticky card, steps 4 columns */
+	--breakpoint-*: initial;
+	--breakpoint-tablet: 560px;
+	--breakpoint-desktop: 900px;
+	--breakpoint-wide: 1200px;
+
+	/* Motion — the registration card rises in on load (motion-safe:animate-rise) */
+	--ease-rise: cubic-bezier(0.2, 0.7, 0.2, 1);
+	--animate-rise: rise 0.7s var(--ease-rise) both;
+
+	@keyframes rise {
+		from {
+			transform: translateY(10px);
+		}
+		to {
+			transform: none;
+		}
+	}
+}
+
+/* ---------- Base ---------- */
+@layer base {
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		@apply bg-surface-app font-sans text-base text-primary antialiased;
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--color-brass);
+		outline-offset: 3px;
+		border-radius: var(--radius-focus);
+	}
+}
+
+/* Spacing rule: the 4px grid (prefer multiples of 8) — Tailwind's default scale is that grid
+   (gap-2 = 8px, p-4 = 16px, …) and v4 also accepts half steps (p-4.5 = 18px, p-8.5 = 34px).
+   Design geometry that is on the grid: perks row py-4.5 · card p-8.5 · option py-4 px-4.5 ·
+   e-mail field p-4.5 · submit py-4.5 px-5 · steps p-6 · benefit tile p-7.5 · hero gap-14 ·
+   section py-16 · band py-18/py-20 · header py-6.5/py-5.5. */
