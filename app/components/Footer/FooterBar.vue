@@ -3,7 +3,7 @@
 
 <template>
 	<footer class="flex flex-wrap justify-between gap-5 border-t border-line pt-7 pb-11 text-caption text-muted">
-		<p>Hotelový klub V.I.P. · Vstup pouze na pozvání</p>
+		<p>DzB Premium · Vstup pouze na pozvání</p>
 		<p>
 			<NuxtLink to="/ochrana-osobnich-udaju" class="hover:text-primary">Ochrana osobních údajů</NuxtLink>
 			·

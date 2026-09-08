@@ -1,5 +1,5 @@
 <!-- Default layout: the page column (design `.wrap` — 1200px, 24px gutters, 16px on phones) with header · content · footer.
-     The outer div clips the full-bleed CTA band horizontally (`clip` keeps position: sticky working, `hidden` would not). -->
+     The outer div clips the full-bleed CTA band horizontally. -->
 <script setup lang="ts"></script>
 
 <template>

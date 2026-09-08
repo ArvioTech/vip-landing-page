@@ -1,4 +1,4 @@
-<!-- Page header: brand (brass seal + display wordmark) · invite-only note (hidden on phones) -->
+<!-- Page header: brand (brass seal + DzB Premium wordmark) · invite-only note (hidden on phones) -->
 <script setup lang="ts"></script>
 
 <template>
@@ -8,10 +8,10 @@
 				class="grid size-8.5 place-items-center rounded-full border border-brass font-display text-meta text-brass"
 				aria-hidden="true"
 			>
-				V
+				D
 			</span>
 			<span class="font-display text-brand font-normal tracking-brand text-primary">
-				Hotelový klub <span class="italic text-brass">V.I.P.</span>
+				DzB <span class="italic text-brass">Premium</span>
 			</span>
 		</NuxtLink>
 

@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 /*
- * V.I.P. Hotelový klub — design tokens, transferred from the landing-page design
+ * DzB Premium — design tokens, transferred from the landing-page design
  * (Claude artifact 2ff0c5f8). Tailwind v4 configuration + a minimal base layer —
  * no component styles here.
  *
@@ -194,15 +194,16 @@
 	--container-note: 40em; /* thanks block in the band */
 
 	/* Breakpoints (mobile-first) — the design breaks at 560 and 900. Default sm…2xl scale is wiped.
-	   ≥ tablet: steps 2 columns, header note visible · ≥ desktop: hero/compare/FAQ 2 columns, sticky card, steps 4 columns */
+	   ≥ tablet: steps 2 columns, header note visible · ≥ desktop: hero/compare/FAQ 2 columns, steps 4 columns */
 	--breakpoint-*: initial;
 	--breakpoint-tablet: 560px;
 	--breakpoint-desktop: 900px;
 	--breakpoint-wide: 1200px;
 
-	/* Motion — the registration card rises in on load (motion-safe:animate-rise) */
+	/* Motion — the thanks block rises in after a successful submit (motion-safe:animate-rise) */
 	--ease-rise: cubic-bezier(0.2, 0.7, 0.2, 1);
 	--animate-rise: rise 0.7s var(--ease-rise) both;
+	--animate-seal: seal 0.5s 0.15s var(--ease-rise) both; /* thanks seal pops in after the block has risen */
 
 	@keyframes rise {
 		from {
@@ -212,11 +213,25 @@
 			transform: none;
 		}
 	}
+
+	@keyframes seal {
+		from {
+			transform: scale(0.6);
+			opacity: 0;
+		}
+		to {
+			transform: none;
+			opacity: 1;
+		}
+	}
 }
 
 /* ---------- Base ---------- */
 @layer base {
-	html {
+	/* Smooth scrolling only for in-page navigation the visitor triggers (anchor links, focus).
+	   Bare `html { scroll-behavior: smooth }` also animates the browser's scroll restoration on
+	   reload, so the whole page glides into place after a refresh. */
+	html:focus-within {
 		scroll-behavior: smooth;
 	}
 

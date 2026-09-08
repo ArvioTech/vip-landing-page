@@ -7,7 +7,7 @@ export default defineNuxtConfig({
 	app: {
 		head: {
 			htmlAttrs: { lang: 'cs' },
-			title: 'V.I.P. Hotel Klub',
+			title: 'DzB Premium',
 		},
 	},
 	css: ['~/assets/css/main.css'],
@@ -25,11 +25,17 @@ export default defineNuxtConfig({
 		},
 	},
 	fonts: {
+		defaults: {
+			// Metric-matched fallbacks (size-adjust from Arial / Georgia width metrics) so text wraps
+			// the same before and after the web font arrives — otherwise the card grew ~20px on load.
+			fallbacks: { 'sans-serif': ['Arial'], serif: ['Georgia'] },
+		},
 		families: [
 			{
 				// display face — headings, big numerals, brand; italic carries the brass emphasis
 				name: 'Fraunces',
 				provider: 'google',
+				preload: true,
 				weights: ['400 500'],
 				styles: ['normal', 'italic'],
 			},
@@ -37,6 +43,7 @@ export default defineNuxtConfig({
 				// text face — body 400, labels/buttons 500–600
 				name: 'Karla',
 				provider: 'google',
+				preload: true,
 				weights: ['400 600'],
 				styles: ['normal'],
 			},

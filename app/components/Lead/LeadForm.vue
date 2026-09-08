@@ -1,5 +1,6 @@
 <!-- Lead form: e-mail · benefit choice (one or two options by variant) · consent · submit → POST /api/leads.
-     After a successful submit the form is replaced by a short thank-you note.
+     After a successful submit the form is replaced by a thank-you block: brass seal, what was sent, what happens next,
+     and a way back in case of a typo in the e-mail. Emits `done` so the card can drop its own heading.
      Two layouts: stacked inside the registration card (default), or `band` — frameless, two columns on desktop, brass button. -->
 <script setup lang="ts">
 	import type { LeadPayload } from '~~/server/api/leads.post';
@@ -8,6 +9,8 @@
 		/** Frameless two-column layout for the inverse CTA band */
 		band?: boolean;
 	}>();
+
+	const emit = defineEmits<{ done: [] }>();
 
 	const variant = useVariant();
 	const emailId = useId();
@@ -29,6 +32,17 @@
 		single.value ? (showDiscount.value ? 'discount_3' : 'cashback_5') : undefined
 	);
 	const consent = ref(false);
+
+	const benefitLabel: Record<NonNullable<LeadPayload['benefit']>, string> = {
+		discount_3: 'Sleva 3 % na všechny objednávky',
+		cashback_5: 'Cashback 5 % z každé objednávky',
+	};
+
+	/** What happens after the submit — steps 3 and 4 of „Jak to probíhá" */
+	const next = [
+		{ title: 'Ověření', text: 'Váš účet ověříme a připravíme. Ozveme se e‑mailem nebo telefonem.' },
+		{ title: 'Přístup', text: 'Přihlásíte se do portálu a rezervujete s členskou výhodou na každé objednávce.' },
+	];
 
 	const status = ref<'idle' | 'sending' | 'done'>('idle');
 	const error = ref('');
@@ -62,6 +76,7 @@
 				} satisfies LeadPayload,
 			});
 			status.value = 'done';
+			emit('done');
 		} catch (e) {
 			const data = (e as { data?: { message?: string } }).data;
 			error.value = data?.message || 'Odeslání se nepovedlo. Zkuste to prosím za chvíli znovu.';
@@ -71,14 +86,71 @@
 </script>
 
 <template>
-	<div v-if="status === 'done'" role="status" :class="band && 'border-t border-line-strong pt-8'">
-		<h3 class="font-display text-display-sm font-normal tracking-display text-balance">
-			Děkujeme, <em class="text-brass">máme to.</em>
-		</h3>
-		<p class="mt-3 text-meta text-secondary">
-			Jakmile váš účet ověříme, ozveme se na <b class="font-semibold text-primary">{{ email.trim() }}</b
-			>. Žádný newsletter, jen jeden e‑mail s přístupem.
-		</p>
+	<div
+		v-if="status === 'done'"
+		role="status"
+		class="motion-safe:animate-rise"
+		:class="
+			band &&
+			'border-t border-line-strong pt-8 desktop:grid desktop:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] desktop:gap-x-14'
+		"
+	>
+		<div>
+			<div class="flex items-center gap-3.5">
+				<span
+					class="grid size-11 shrink-0 place-items-center rounded-full border border-brass bg-brass-soft text-brass motion-safe:animate-seal"
+				>
+					<IconCheck class="size-5.5" />
+				</span>
+				<p class="text-micro font-semibold tracking-badge text-brass uppercase">Zájem přijat · krok 2 ze 4</p>
+			</div>
+			<h3 class="mt-5 font-display text-display-sm font-normal tracking-display text-balance">
+				Děkujeme, <em class="text-brass">máme to.</em>
+			</h3>
+			<p class="mt-3 max-w-note text-meta text-secondary">
+				Jakmile váš účet ověříme, ozveme se na <b class="font-semibold text-primary">{{ email.trim() }}</b
+				>. Žádný newsletter, jen jeden e‑mail s přístupem.
+			</p>
+		</div>
+
+		<div :class="band ? 'mt-8 desktop:mt-0' : 'mt-7'">
+			<dl
+				class="grid grid-cols-[auto_1fr] gap-x-5 gap-y-2.5 border-line py-4 text-caption"
+				:class="band ? 'border-y' : 'rounded-field border bg-surface-app px-4.5'"
+			>
+				<dt class="text-label font-semibold tracking-label text-muted uppercase">E‑mail</dt>
+				<dd class="min-w-0 truncate font-semibold text-primary">{{ email.trim() }}</dd>
+				<dt class="text-label font-semibold tracking-label text-muted uppercase">Výhoda</dt>
+				<dd class="font-semibold text-primary">{{ benefit ? benefitLabel[benefit] : '—' }}</dd>
+				<dt class="text-label font-semibold tracking-label text-muted uppercase">Č. člena</dt>
+				<dd class="text-secondary">Přidělíme po ověření</dd>
+			</dl>
+
+			<p :class="[labelClass, 'mt-6 mb-3']">Co bude dál</p>
+			<ol class="grid gap-3.5">
+				<li
+					v-for="(step, i) in next"
+					:key="step.title"
+					class="grid grid-cols-[28px_1fr] items-baseline gap-x-3"
+				>
+					<span class="font-display text-plan-title leading-none text-brass tabular-nums">{{ i + 3 }}</span>
+					<span class="text-meta text-secondary">
+						<b class="font-semibold text-primary">{{ step.title }}.</b> {{ step.text }}
+					</span>
+				</li>
+			</ol>
+
+			<p class="mt-6 text-caption text-muted">
+				Překlep v e‑mailu?
+				<button
+					type="button"
+					class="cursor-pointer font-semibold text-brass underline decoration-brass/40 underline-offset-3 hover:decoration-brass"
+					@click="status = 'idle'"
+				>
+					Opravit a odeslat znovu
+				</button>
+			</p>
+		</div>
 	</div>
 
 	<form

@@ -46,7 +46,7 @@
 						</p>
 					</div>
 				</li>
-				<li class="grid grid-cols-[26px_1fr] gap-4 border-b border-line py-4.5">
+				<li class="grid grid-cols-[26px_1fr] gap-4 py-4.5">
 					<IconHotel class="mt-[3px] size-5.5 text-brass" />
 					<div>
 						<strong class="mb-0.5 block font-semibold">Jeden portál, přihlášení, rezervace</strong>
