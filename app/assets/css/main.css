@@ -188,10 +188,10 @@
 	/* Widths — max-w-wrap is the page column, the rest are copy measures */
 	--container-*: initial;
 	--container-wrap: 1200px; /* page column: min(1200px, 100% - 48px); 100% - 32px on phones */
-	--container-plan: 560px; /* single benefit tile in the sleva/cashback variants */
 	--container-lead: 34em; /* hero lead */
 	--container-copy: 36em; /* section intro paragraph */
 	--container-note: 40em; /* thanks block in the band */
+	--container-form: 720px; /* centered form + thanks block in the CTA band */
 
 	/* Breakpoints (mobile-first) — the design breaks at 560 and 900. Default sm…2xl scale is wiped.
 	   ≥ tablet: steps 2 columns, header note visible · ≥ desktop: hero/compare/FAQ 2 columns, steps 4 columns */

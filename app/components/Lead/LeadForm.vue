@@ -1,7 +1,8 @@
-<!-- Lead form: e-mail · benefit (two radio tiles in the choice variant, one static tile in sleva / cashback) · consent · submit → POST /api/leads.
+<!-- Lead form: e-mail (pre-filled from ?e= when the invitation link carries it) · benefit (two radio tiles in the choice variant, one static tile in sleva / cashback) · consent · submit → POST /api/leads.
      After a successful submit the form is replaced by a thank-you block: brass seal, what was sent, what happens next,
      and a way back in case of a typo in the e-mail. Emits `done` so the card can drop its own heading.
-     Two layouts: stacked inside the registration card (default), or `band` — frameless, two columns on desktop, brass button. -->
+     Two layouts: stacked inside the registration card (default), or `band` — centered 720px column in the CTA band:
+     benefit tiles (choice variant only), e-mail + brass button in one row, consent underneath; no fine print (the band has its own). -->
 <script setup lang="ts">
 	import type { LeadPayload } from '~~/server/api/leads.post';
 
@@ -24,7 +25,12 @@
 		props.band ? 'text-muted' : 'text-secondary',
 	]);
 
-	const email = ref('');
+	// Pre-filled from the invitation link (?e=) or the tab's sessionStorage, otherwise empty
+	const emailParam = useEmailParam();
+	const email = ref(emailParam.value);
+	watch(emailParam, (value) => {
+		if (!email.value) email.value = value;
+	});
 	// Single-benefit variants come pre-selected; with both on offer the visitor has to pick
 	const benefit = ref<LeadPayload['benefit'] | undefined>(
 		variant.value === 'sleva' ? 'discount_3' : variant.value === 'cashback' ? 'cashback_5' : undefined
@@ -96,10 +102,7 @@
 		v-if="status === 'done'"
 		role="status"
 		class="motion-safe:animate-rise"
-		:class="
-			band &&
-			'border-t border-line-strong pt-8 desktop:grid desktop:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] desktop:gap-x-14'
-		"
+		:class="band && 'mx-auto w-full max-w-form border-t border-line-strong pt-8 text-left'"
 	>
 		<div>
 			<div class="flex items-center gap-3.5">
@@ -119,7 +122,7 @@
 			</p>
 		</div>
 
-		<div :class="band ? 'mt-8 desktop:mt-0' : 'mt-7'">
+		<div class="mt-7">
 			<dl
 				class="grid grid-cols-[auto_1fr] gap-x-5 gap-y-2.5 border-line py-4 text-caption"
 				:class="band ? 'border-y' : 'rounded-field border bg-surface-app px-4.5'"
@@ -162,29 +165,55 @@
 	<form
 		v-else
 		novalidate
-		:class="
-			band &&
-			`border-t border-line-strong pt-8 desktop:grid desktop:grid-cols-2 desktop:grid-rows-[auto_1fr_auto_auto_auto] desktop:items-start desktop:gap-x-10 desktop:[grid-template-areas:'label_opts'_'email_opts'_'consent_submit'_'error_error'_'fine_fine']`
-		"
+		class="flex flex-col"
+		:class="band && 'mx-auto w-full max-w-form text-left'"
 		@submit.prevent="submit"
 	>
-		<label :for="emailId" :class="[labelClass, 'mb-2', band && 'desktop:[grid-area:label]']">Váš e‑mail</label>
-		<input
-			:id="emailId"
-			v-model="email"
-			name="email"
-			type="email"
-			inputmode="email"
-			autocomplete="email"
-			placeholder="jmeno@firma.cz"
-			required
-			:aria-invalid="emailInvalid || undefined"
-			class="w-full rounded-field border border-line-strong bg-surface-app p-4.5 text-lead text-primary placeholder:text-muted focus:border-brass focus:outline-none aria-invalid:border-danger tablet:text-input"
-			:class="band && 'desktop:[grid-area:email]'"
-		/>
+		<label :for="emailId" :class="[labelClass, 'mb-2', band ? 'sr-only' : 'order-1']">Váš e‑mail</label>
 
-		<!-- Single-benefit variants: the benefit is given, so it is shown as a static tile, not a lone radio -->
-		<div v-if="single && benefit" class="mt-6.5" :class="band && 'desktop:mt-0 desktop:[grid-area:opts]'">
+		<!-- Card: the wrapper dissolves (`contents`) so input and button take their own places in the column.
+		     Band: it is the one-row group — input grows, brass button attached (stacked under the input on phones). -->
+		<div
+			:class="
+				band
+					? 'order-2 flex flex-col overflow-hidden rounded-field border border-line-strong bg-surface-app focus-within:border-brass tablet:flex-row'
+					: 'contents'
+			"
+		>
+			<input
+				:id="emailId"
+				v-model="email"
+				name="email"
+				type="email"
+				inputmode="email"
+				autocomplete="email"
+				placeholder="jmeno@firma.cz"
+				required
+				:aria-invalid="emailInvalid || undefined"
+				class="text-lead text-primary placeholder:text-muted focus:outline-none aria-invalid:border-danger tablet:text-input"
+				:class="
+					band
+						? 'min-w-0 flex-1 bg-transparent px-5.5 py-4.5'
+						: 'order-2 w-full rounded-field border border-line-strong bg-surface-app p-4.5 focus:border-brass'
+				"
+			/>
+			<button
+				type="submit"
+				:disabled="status === 'sending'"
+				class="flex cursor-pointer items-center justify-center gap-2.5 text-base font-semibold tracking-button transition duration-100 hover:border-brass-strong hover:bg-brass-strong active:translate-y-px disabled:cursor-progress disabled:opacity-60"
+				:class="
+					band
+						? 'shrink-0 bg-brass px-6.5 py-4.5 text-on-brass tablet:py-0'
+						: 'order-5 mt-5.5 w-full rounded-field border border-primary bg-primary px-5 py-4.5 text-surface-app'
+				"
+			>
+				<span>{{ status === 'sending' ? 'Odesílám…' : 'Mám zájem' }}</span>
+				<IconArrowRight class="size-4.5" />
+			</button>
+		</div>
+
+		<!-- Single-benefit variants: the benefit is given, so the card shows it as a static tile (the band says it in its lead) -->
+		<div v-if="single && benefit && !band" class="order-3 mt-6.5">
 			<p :class="[labelClass, 'mb-2.5']">Vaše členská výhoda</p>
 			<div
 				class="grid grid-cols-[auto_1fr] items-start gap-x-3.5 gap-y-1 rounded-field border border-brass bg-brass-soft px-4.5 py-4"
@@ -197,9 +226,9 @@
 			</div>
 		</div>
 
-		<fieldset v-else class="mt-6.5" :class="band && 'desktop:mt-0 desktop:[grid-area:opts]'">
+		<fieldset v-else-if="!single" :class="band ? 'order-1 mb-5' : 'order-3 mt-6.5'">
 			<legend :class="[labelClass, 'mb-2.5']">Která výhoda vás zajímá?</legend>
-			<div class="grid gap-2.5" :class="band && 'grid-cols-[repeat(auto-fit,minmax(200px,1fr))]'">
+			<div class="grid gap-2.5" :class="band && 'tablet:grid-cols-2'">
 				<LeadBenefitOption
 					v-for="(item, key) in benefits"
 					:key="key"
@@ -215,8 +244,8 @@
 		</fieldset>
 
 		<label
-			class="mt-5.5 grid grid-cols-[18px_1fr] gap-3 text-caption text-secondary"
-			:class="band && 'desktop:mt-7 desktop:self-center desktop:[grid-area:consent]'"
+			class="grid grid-cols-[18px_1fr] gap-3 text-caption text-secondary"
+			:class="band ? 'order-3 mx-auto mt-5 max-w-[560px]' : 'order-4 mt-5.5'"
 		>
 			<input v-model="consent" type="checkbox" name="consent" required class="mt-0.5 size-4.5 accent-brass" />
 			<span>
@@ -225,23 +254,14 @@
 			</span>
 		</label>
 
-		<button
-			type="submit"
-			:disabled="status === 'sending'"
-			class="flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-field border px-5 py-4.5 text-base font-semibold tracking-button transition duration-100 hover:border-brass-strong hover:bg-brass-strong active:translate-y-px disabled:cursor-progress disabled:opacity-60"
-			:class="
-				band
-					? 'mt-4.5 border-brass bg-brass text-on-brass desktop:mt-7 desktop:[grid-area:submit]'
-					: 'mt-5.5 border-primary bg-primary text-surface-app'
-			"
+		<p
+			class="mt-3 text-caption text-danger empty:hidden"
+			:class="band ? 'order-4 text-center' : 'order-6'"
+			role="alert"
 		>
-			<span>{{ status === 'sending' ? 'Odesílám…' : 'Mám zájem' }}</span>
-			<IconArrowRight class="size-4.5" />
-		</button>
-		<p class="mt-3 text-caption text-danger empty:hidden" :class="band && 'desktop:[grid-area:error]'" role="alert">
 			{{ error }}
 		</p>
-		<p class="mt-3.5 text-label text-muted" :class="band ? 'text-left desktop:[grid-area:fine]' : 'text-center'">
+		<p v-if="!band" class="order-7 mt-3.5 text-center text-label text-muted">
 			Ozveme se, jakmile váš účet ověříme. Žádný newsletter.
 		</p>
 	</form>

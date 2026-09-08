@@ -1,6 +1,9 @@
-<!-- „Porovnání výhod": both tiles side by side in the choice variant; a single, narrower tile in the sleva / cashback variants -->
+<!-- „Porovnání výhod": the benefit tile(s) plus two membership extras (price watch, fast booking).
+     Choice variant: both tiles side by side, extras in a row below. Sleva / cashback: one tile on the left,
+     the two extras stacked on the right so the section does not run half empty. -->
 <script setup lang="ts">
 	const variant = useVariant();
+	const single = computed(() => variant.value !== 'both');
 
 	const head = computed(() => {
 		switch (variant.value) {
@@ -33,7 +36,10 @@
 	<section id="vyhody" class="border-t border-line py-16">
 		<SectionHead :eyebrow="head.eyebrow" :title="head.title">{{ head.intro }}</SectionHead>
 
-		<div :class="variant === 'both' ? 'grid gap-6 desktop:grid-cols-2' : 'max-w-plan'">
+		<div
+			class="grid gap-6"
+			:class="single ? 'desktop:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]' : 'desktop:grid-cols-2'"
+		>
 			<ComparePlan
 				v-if="showDiscount"
 				figure="3"
@@ -66,6 +72,21 @@
 					voucher na <b class="font-semibold text-primary tabular-nums">600 Kč</b>.
 				</template>
 			</ComparePlan>
+
+			<div class="grid gap-6" :class="single ? 'desktop:grid-rows-2' : 'desktop:col-span-2 desktop:grid-cols-2'">
+				<CompareExtra
+					title="Hlídací pes cen"
+					text="Hotely, které vás zajímají, sledujeme za vás. Když cena klesne, dáme vám vědět a vy ušetříte další peníze."
+				>
+					<template #icon><IconBell class="size-6 text-brass" /></template>
+				</CompareExtra>
+				<CompareExtra
+					title="Rezervace na pár kliknutí"
+					text="Vaše údaje máme předvyplněné a rezervační krok zjednodušený. Pobyt rezervujete během chvíle, bez opakovaného vyplňování formulářů."
+				>
+					<template #icon><IconBolt class="size-6 text-brass" /></template>
+				</CompareExtra>
+			</div>
 		</div>
 	</section>
 </template>

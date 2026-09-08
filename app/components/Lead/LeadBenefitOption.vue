@@ -15,10 +15,10 @@
 </script>
 
 <template>
-	<label class="group relative block cursor-pointer">
+	<label class="group relative block h-full cursor-pointer">
 		<input v-model="model" type="radio" :name="name" :value="value" class="peer sr-only" />
 		<span
-			class="grid grid-cols-[auto_1fr] items-start gap-x-3.5 gap-y-1 rounded-field border border-line-strong px-4.5 py-4 group-hover:border-brass peer-checked:border-brass peer-checked:bg-brass-soft peer-checked:ring-1 peer-checked:ring-brass peer-checked:ring-inset peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brass"
+			class="grid h-full grid-cols-[auto_1fr] content-start items-start gap-x-3.5 gap-y-1 rounded-field border border-line-strong px-4.5 py-4 group-hover:border-brass peer-checked:border-brass peer-checked:bg-brass-soft peer-checked:ring-1 peer-checked:ring-brass peer-checked:ring-inset peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brass"
 			:class="plain ? 'bg-transparent' : 'bg-surface-app'"
 		>
 			<span class="row-span-2 font-display text-display-sm leading-none text-brass tabular-nums">{{
