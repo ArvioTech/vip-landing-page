@@ -7,7 +7,7 @@
 		<p>
 			<NuxtLink to="/ochrana-osobnich-udaju" class="hover:text-primary">Ochrana osobních údajů</NuxtLink>
 			·
-			<a href="mailto:info@vip-hotel.cz" class="hover:text-primary">Kontakt</a>
+			<a href="mailto:info@dovolena-za-benefity.cz" class="hover:text-primary">Kontakt</a>
 		</p>
 	</footer>
 </template>
