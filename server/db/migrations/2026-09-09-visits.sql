@@ -1,23 +1,7 @@
--- Leads collected by the landing page form. Apply once against the Neon database:
---   psql "$DATABASE_URL_UNPOOLED" -f server/db/schema.sql
--- One row per e-mail; a repeated sign-up just refreshes the chosen benefit (see server/api/leads.post.ts).
+-- Page visits, so we can tell which invitee opened the page (the ?e= address from the invitation link)
+-- and how many people came in total → conversion = leads / visitors. Apply once:
+--   psql "$DATABASE_URL_UNPOOLED" -f server/db/migrations/2026-09-09-visits.sql
 
-CREATE TABLE IF NOT EXISTS leads (
-	id         bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	email      text NOT NULL UNIQUE,
-	benefit    text NOT NULL CHECK (benefit IN ('discount_3', 'voucher_35')),
-	-- A/B variant of the page the visitor saw (?v=volba | sleva | voucher)
-	variant    text NOT NULL CHECK (variant IN ('both', 'sleva', 'voucher')),
-	-- Which of the two forms on the page was used
-	placement  text NOT NULL CHECK (placement IN ('card', 'band')),
-	consent_at timestamptz NOT NULL DEFAULT now(),
-	created_at timestamptz NOT NULL DEFAULT now(),
-	updated_at timestamptz NOT NULL DEFAULT now()
-);
-
-CREATE INDEX IF NOT EXISTS leads_created_at_idx ON leads (created_at DESC);
-
--- Page visits (see migrations/2026-09-09-visits.sql for the why)
 CREATE TABLE IF NOT EXISTS visits (
 	id         bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	-- ?e= from the invitation link, lower-cased; NULL when the visitor came without it
