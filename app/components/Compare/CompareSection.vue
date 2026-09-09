@@ -40,7 +40,6 @@
 	const voucherPoints = computed(() =>
 		single.value
 			? [
-					'Platí na každý pobyt po dobu členství',
 					'Voucher dostanete po skončení pobytu',
 					'Uplatníte ho na kteroukoli další rezervaci',
 				]
