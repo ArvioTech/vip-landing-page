@@ -133,8 +133,6 @@
 				<dd class="min-w-0 truncate font-semibold text-primary">{{ email.trim() }}</dd>
 				<dt class="text-label font-semibold tracking-label text-muted uppercase">Výhoda</dt>
 				<dd class="font-semibold text-primary">{{ benefit ? benefits[benefit].title : '—' }}</dd>
-				<dt class="text-label font-semibold tracking-label text-muted uppercase">Č. člena</dt>
-				<dd class="text-secondary">Přidělíme po ověření</dd>
 			</dl>
 
 			<p :class="[labelClass, 'mt-6 mb-3']">Co bude dál</p>
