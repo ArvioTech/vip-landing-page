@@ -247,13 +247,20 @@
 			class="grid cursor-pointer grid-cols-[18px_1fr] gap-3 text-caption text-secondary"
 			:class="band ? 'order-3 mx-auto mt-5 max-w-[560px]' : 'order-4 mt-5.5'"
 		>
-			<input
-				v-model="consent"
-				type="checkbox"
-				name="consent"
-				required
-				class="mt-0.5 size-4.5 cursor-pointer accent-brass"
-			/>
+			<!-- Custom box, not the native control: native checkboxes follow the element's color-scheme,
+			     so inside the inverse band an unchecked one renders as a dark grey square. -->
+			<span class="relative mt-0.5 size-4.5">
+				<input
+					v-model="consent"
+					type="checkbox"
+					name="consent"
+					required
+					class="peer size-full cursor-pointer appearance-none rounded-field border border-line-strong bg-surface-app transition-colors checked:border-brass checked:bg-brass hover:border-brass"
+				/>
+				<IconCheck
+					class="pointer-events-none absolute inset-0 m-auto size-3.5 text-on-brass opacity-0 transition-opacity peer-checked:opacity-100"
+				/>
+			</span>
 			<span>
 				Souhlasím, abyste mě ohledně členství v klubu kontaktovali e‑mailem nebo telefonicky. Údaje použijeme
 				jen k ověření zájmu a přístupu.
