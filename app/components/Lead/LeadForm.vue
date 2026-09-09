@@ -257,7 +257,7 @@
 				class="mt-0.5 size-4.5 cursor-pointer accent-brass"
 			/>
 			<span>
-				Souhlasím, abyste mě ohledně členství v klubu kontaktovali e‑mailem nebo telefonicky. Údaje použijete
+				Souhlasím, abyste mě ohledně členství v klubu kontaktovali e‑mailem nebo telefonicky. Údaje použijeme
 				jen k ověření zájmu a přístupu.
 			</span>
 		</label>
