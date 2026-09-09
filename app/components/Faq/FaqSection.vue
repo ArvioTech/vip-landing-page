@@ -12,12 +12,12 @@
 			case 'cashback':
 				return {
 					q: 'Jak dlouho voucher platí?',
-					a: 'Voucher vystavíme po dokončení pobytu a uplatníte ho na kteroukoli další rezervaci v portálu. Přesnou platnost upřesníme před spuštěním.',
+					a: 'Voucher vystavíme po dokončení pobytu a uplatníte ho na kteroukoli další rezervaci v portálu. Jeho platnost vidíte přímo u voucheru ve svém účtu.',
 				};
 			default:
 				return {
 					q: 'Můžu výhodu později změnit?',
-					a: 'Teď nám jen říkáte, co vás láká víc. Před spuštěním portálu si volbu společně potvrdíme.',
+					a: 'Ano. Teď nám jen říkáte, co vás láká víc. Při aktivaci účtu si volbu společně potvrdíme.',
 				};
 		}
 	});
@@ -37,7 +37,7 @@
 		variantQuestion.value,
 		{
 			q: 'Jak dlouho klub trvá?',
-			a: 'Výhody platí po celou dobu trvání klubu. O jeho podmínkách a délce vás budeme informovat před aktivací účtu.',
+			a: 'Výhody platí po celou dobu trvání klubu. Podmínky a délku členství vám pošleme spolu s přístupem do portálu.',
 		},
 	]);
 </script>

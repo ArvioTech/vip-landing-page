@@ -2,7 +2,7 @@
  * POST /api/leads — stores interest in the club membership.
  * Body: { email, benefit, variant, placement, consent }. Re-submitting the same e-mail updates the chosen benefit.
  */
-const BENEFITS = ['discount_3', 'cashback_5'] as const;
+const BENEFITS = ['discount_3', 'cashback_35'] as const;
 const VARIANTS = ['both', 'sleva', 'cashback'] as const;
 const PLACEMENTS = ['card', 'band'] as const;
 

@@ -33,7 +33,7 @@
 	});
 	// Single-benefit variants come pre-selected; with both on offer the visitor has to pick
 	const benefit = ref<LeadPayload['benefit'] | undefined>(
-		variant.value === 'sleva' ? 'discount_3' : variant.value === 'cashback' ? 'cashback_5' : undefined
+		variant.value === 'sleva' ? 'discount_3' : variant.value === 'cashback' ? 'cashback_35' : undefined
 	);
 	const consent = ref(false);
 
@@ -43,10 +43,10 @@
 			hint: 'Nižší cena rovnou při rezervaci, po celou dobu trvání klubu.',
 			figure: '3 %',
 		},
-		cashback_5: {
-			title: 'Cashback 5 % z každé objednávky',
+		cashback_35: {
+			title: 'Cashback 3,5 % z každé objednávky',
 			hint: 'Po každém pobytu dostanete jednorázový voucher na další rezervaci.',
-			figure: '5 %',
+			figure: '3,5 %',
 		},
 	};
 

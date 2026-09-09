@@ -8,7 +8,7 @@
 			case 'sleva':
 				return 'Nic neplatíte, k ničemu se nezavazujete. Sleva 3 % platí na každou rezervaci po celou dobu klubu.';
 			case 'cashback':
-				return 'Nic neplatíte, k ničemu se nezavazujete. Cashback 5 % platí na každou rezervaci po celou dobu klubu.';
+				return 'Nic neplatíte, k ničemu se nezavazujete. Cashback 3,5 % platí na každou rezervaci po celou dobu klubu.';
 			default:
 				return 'Nic neplatíte, k ničemu se nezavazujete. Vybraná výhoda platí na každou rezervaci po celou dobu klubu.';
 		}

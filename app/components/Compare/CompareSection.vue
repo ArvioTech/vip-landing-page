@@ -23,7 +23,7 @@
 				return {
 					eyebrow: 'Dvě výhody, jedna volba',
 					title: 'Sleva hned, nebo voucher po pobytu',
-					intro: 'Obě výhody platí po celou dobu trvání klubu a na všechny rezervace. Liší se jen v tom, kdy a jak je dostanete. Vaše volba nám pomůže nastavit klub tak, jak ho členové skutečně chtějí.',
+					intro: 'Obě výhody platí po celou dobu trvání klubu a na všechny rezervace. Liší se jen v tom, kdy a jak je dostanete. Vyberte si tu, která sedí vašemu způsobu cestování.',
 				};
 		}
 	});
@@ -58,9 +58,9 @@
 			</ComparePlan>
 			<ComparePlan
 				v-if="showCashback"
-				figure="5"
+				figure="3,5"
 				title="Cashback formou voucheru"
-				text="Po každé dokončené rezervaci vám vystavíme jednorázový voucher v hodnotě 5 % z ceny objednávky."
+				text="Po každé dokončené rezervaci vám vystavíme jednorázový voucher v hodnotě 3,5 % z ceny objednávky."
 				:points="[
 					'Vyšší celková výhoda',
 					'Voucher uplatníte na další rezervaci',
@@ -69,7 +69,7 @@
 			>
 				<template #example>
 					Příklad: po pobytu za <b class="font-semibold text-primary tabular-nums">12 000 Kč</b> získáte
-					voucher na <b class="font-semibold text-primary tabular-nums">600 Kč</b>.
+					voucher na <b class="font-semibold text-primary tabular-nums">420 Kč</b>.
 				</template>
 			</ComparePlan>
 

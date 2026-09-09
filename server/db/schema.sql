@@ -5,7 +5,7 @@
 CREATE TABLE IF NOT EXISTS leads (
 	id         bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	email      text NOT NULL UNIQUE,
-	benefit    text NOT NULL CHECK (benefit IN ('discount_3', 'cashback_5')),
+	benefit    text NOT NULL CHECK (benefit IN ('discount_3', 'cashback_35')),
 	-- A/B variant of the page the visitor saw (?v=volba | sleva | cashback)
 	variant    text NOT NULL CHECK (variant IN ('both', 'sleva', 'cashback')),
 	-- Which of the two forms on the page was used

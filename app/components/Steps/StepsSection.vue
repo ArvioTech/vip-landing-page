@@ -30,8 +30,8 @@
 <template>
 	<section id="jak" class="border-t border-line py-16">
 		<SectionHead eyebrow="Jak to probíhá" title="Čtyři kroky od telefonátu k první rezervaci">
-			Nechceme otevřený web, kde se zaregistruje kdokoli. Klub stavíme kolem lidí, které známe, proto vede cesta
-			přes osobní pozvání a ruční ověření.
+			Nechceme otevřený web, kde se zaregistruje kdokoli. Klub tvoří lidé, které známe, proto vede cesta přes
+			osobní pozvání a ruční ověření.
 		</SectionHead>
 
 		<ol class="grid gap-px border-t border-line-strong bg-line tablet:grid-cols-2 desktop:grid-cols-4">

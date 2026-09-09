@@ -5,7 +5,7 @@
 	/** Headline — the cashback variant leads with the voucher instead of "členské ceny" */
 	const headline = computed(() =>
 		variant.value === 'cashback'
-			? { a: 'Z každého pobytu 5 % zpět.', em: 'Bez hledání slev,', b: 'po celou dobu členství.' }
+			? { a: 'Z každého pobytu 3,5 % zpět.', em: 'Bez hledání slev,', b: 'po celou dobu členství.' }
 			: { a: 'Hotely za členské ceny.', em: 'Bez hledání slev,', b: 'po celou dobu členství.' }
 	);
 
@@ -13,11 +13,11 @@
 	const lead = computed(() => {
 		switch (variant.value) {
 			case 'sleva':
-				return 'Připravujeme klub, kde členové rezervují hotely se slevou 3 % na každé objednávce. Zatím zjišťujeme zájem: zanechte e‑mail a my ověříme váš přístup.';
+				return 'V klubu rezervujete hotely se slevou 3 % na každé objednávce. Zanechte e‑mail, my ověříme váš přístup a pošleme vám přihlášení do portálu.';
 			case 'cashback':
-				return 'Připravujeme klub, kde členové z každé rezervace hotelu dostanou 5 % zpět formou voucheru. Zatím zjišťujeme zájem: zanechte e‑mail a my ověříme váš přístup.';
+				return 'V klubu dostanete z každé rezervace hotelu 3,5 % zpět formou voucheru. Zanechte e‑mail, my ověříme váš přístup a pošleme vám přihlášení do portálu.';
 			default:
-				return 'Připravujeme klub, kde členové rezervují hotely s trvalou výhodou na každé objednávce. Zatím zjišťujeme zájem: zanechte e‑mail, vyberte výhodu, která vám dává větší smysl, a my ověříme váš přístup.';
+				return 'V klubu rezervujete hotely s trvalou výhodou na každé objednávce. Zanechte e‑mail, vyberte výhodu, která vám dává větší smysl, a my ověříme váš přístup.';
 		}
 	});
 
@@ -26,9 +26,9 @@
 			case 'sleva':
 				return 'Sleva 3 % na všechny objednávky po celou dobu trvání klubu, nejen na první.';
 			case 'cashback':
-				return 'Cashback 5 % z každé objednávky formou voucheru, po celou dobu trvání klubu.';
+				return 'Cashback 3,5 % z každé objednávky formou voucheru, po celou dobu trvání klubu.';
 			default:
-				return 'Sleva 3 % nebo cashback 5 % – platí na všechny objednávky po celou dobu trvání klubu, nejen na první.';
+				return 'Sleva 3 % nebo cashback 3,5 % – platí na všechny objednávky po celou dobu trvání klubu, nejen na první.';
 		}
 	});
 </script>
