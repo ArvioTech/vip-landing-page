@@ -17,7 +17,7 @@
 			case 'cashback':
 				return 'V klubu dostanete z každé rezervace hotelu 3,5 % zpět formou voucheru. Zanechte e‑mail, my ověříme váš přístup a pošleme vám přihlášení do portálu.';
 			default:
-				return 'V klubu rezervujete hotely s trvalou výhodou na každé objednávce. Zanechte e‑mail, vyberte výhodu, která vám dává větší smysl, a my ověříme váš přístup.';
+				return 'V klubu rezervujete hotely s výhodou na každé objednávce. Zanechte e‑mail, vyberte výhodu, která vám dává větší smysl, a my ověříme váš přístup.';
 		}
 	});
 
@@ -26,9 +26,9 @@
 			case 'sleva':
 				return 'Sleva 3 % na všechny objednávky po celou dobu trvání klubu, nejen na první.';
 			case 'cashback':
-				return 'Cashback 3,5 % z každé objednávky formou voucheru, po celou dobu trvání klubu.';
+				return '3,5 % z každé objednávky zpět formou voucheru, po celou dobu trvání klubu.';
 			default:
-				return 'Sleva 3 % nebo cashback 3,5 % – platí na všechny objednávky po celou dobu trvání klubu, nejen na první.';
+				return 'Sleva 3 % nebo voucher 3,5 % – platí na všechny objednávky po celou dobu trvání klubu, nejen na první.';
 		}
 	});
 </script>

@@ -17,7 +17,7 @@
 				return {
 					eyebrow: 'Členská výhoda',
 					title: 'Voucher po každém pobytu',
-					intro: 'Cashback platí po celou dobu trvání klubu a na všechny rezervace. Po každém dokončeném pobytu dostanete jednorázový voucher na další rezervaci.',
+					intro: 'Výhoda platí po celou dobu trvání klubu a na všechny rezervace. Po každém dokončeném pobytu dostanete jednorázový voucher ve výši 3,5 % na další rezervaci.',
 				};
 			default:
 				return {
@@ -59,7 +59,7 @@
 			<ComparePlan
 				v-if="showCashback"
 				figure="3,5"
-				title="Cashback formou voucheru"
+				title="Voucher na další rezervaci"
 				text="Po každé dokončené rezervaci vám vystavíme jednorázový voucher v hodnotě 3,5 % z ceny objednávky."
 				:points="[
 					'Vyšší celková výhoda',

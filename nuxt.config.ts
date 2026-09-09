@@ -7,7 +7,13 @@ export default defineNuxtConfig({
 	app: {
 		head: {
 			htmlAttrs: { lang: 'cs' },
-			title: 'DzB Premium',
+			title: 'Premium Dovolená za benefity',
+			link: [
+				// brass „P" seal — SVG for modern browsers, ICO fallback, PNG for iOS home screen
+				{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+				{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico', sizes: '32x32' },
+				{ rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+			],
 		},
 	},
 	css: ['~/assets/css/main.css'],

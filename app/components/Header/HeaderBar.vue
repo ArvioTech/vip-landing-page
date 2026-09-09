@@ -1,4 +1,4 @@
-<!-- Page header: brand (brass seal + DzB Premium wordmark) · invite-only note (hidden on phones) -->
+<!-- Page header: brand (brass seal + „Premium Dovolená za benefity" wordmark) · invite-only note (hidden on phones) -->
 <script setup lang="ts"></script>
 
 <template>
@@ -8,14 +8,19 @@
 				class="grid size-8.5 place-items-center rounded-full border border-brass font-display text-meta text-brass"
 				aria-hidden="true"
 			>
-				D
+				P
 			</span>
-			<span class="font-display text-brand font-normal tracking-brand text-primary">
-				DzB <span class="italic text-brass">Premium</span>
+			<span class="flex flex-col">
+				<span class="font-display text-brand font-normal italic leading-none tracking-brand text-brass"
+					>Premium</span
+				>
+				<span class="mt-1 text-micro font-semibold uppercase tracking-[0.08em] text-muted"
+					>Dovolená za benefity</span
+				>
 			</span>
 		</NuxtLink>
 
-		<p class="hidden text-label text-muted tablet:block">
+		<p class="hidden text-caption text-muted tablet:block">
 			Vstup pouze na pozvání · <b class="font-semibold text-primary">Přístup ověřujeme ručně</b>
 		</p>
 	</header>

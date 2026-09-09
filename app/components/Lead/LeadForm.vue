@@ -44,7 +44,7 @@
 			figure: '3 %',
 		},
 		cashback_35: {
-			title: 'Cashback 3,5 % z každé objednávky',
+			title: '3,5 % z každé objednávky zpět',
 			hint: 'Po každém pobytu dostanete jednorázový voucher na další rezervaci.',
 			figure: '3,5 %',
 		},
@@ -111,7 +111,9 @@
 				>
 					<IconCheck class="size-5.5" />
 				</span>
-				<p class="text-micro font-semibold tracking-badge text-brass uppercase">Zájem přijat · krok 2 ze 4</p>
+				<p class="text-micro font-semibold tracking-badge text-brass uppercase">
+					Pozvání přijato · krok 2 ze 4
+				</p>
 			</div>
 			<h3 class="mt-5 font-display text-display-sm font-normal tracking-display text-balance">
 				Děkujeme, <em class="text-brass">máme to.</em>
@@ -207,7 +209,7 @@
 						: 'order-5 mt-5.5 w-full rounded-field border border-primary bg-primary px-5 py-4.5 text-surface-app'
 				"
 			>
-				<span>{{ status === 'sending' ? 'Odesílám…' : 'Mám zájem' }}</span>
+				<span>{{ status === 'sending' ? 'Odesílám…' : 'Přijmout pozvání' }}</span>
 				<IconArrowRight class="size-4.5" />
 			</button>
 		</div>
