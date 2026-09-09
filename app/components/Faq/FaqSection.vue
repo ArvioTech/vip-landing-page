@@ -9,7 +9,7 @@
 					q: 'Platí sleva i na akční ceny hotelů?',
 					a: 'Ano. Členská sleva se odečítá z ceny, kterou v portálu vidíte, bez ohledu na to, zda hotel právě nabízí vlastní akci.',
 				};
-			case 'cashback':
+			case 'voucher':
 				return {
 					q: 'Jak dlouho voucher platí?',
 					a: 'Voucher vystavíme po dokončení pobytu a uplatníte ho na kteroukoli další rezervaci v portálu. Jeho platnost vidíte přímo u voucheru ve svém účtu.',

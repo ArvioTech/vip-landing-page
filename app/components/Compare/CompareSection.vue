@@ -1,5 +1,5 @@
 <!-- „Porovnání výhod": the benefit tile(s) plus two membership extras (price watch, fast booking).
-     Choice variant: both tiles side by side, extras in a row below. Sleva / cashback: one tile on the left,
+     Choice variant: both tiles side by side, extras in a row below. Sleva / voucher: one tile on the left,
      the two extras stacked on the right so the section does not run half empty. -->
 <script setup lang="ts">
 	const variant = useVariant();
@@ -13,7 +13,7 @@
 					title: 'Nižší cena na každé rezervaci',
 					intro: 'Sleva platí po celou dobu trvání klubu a na všechny rezervace. Odečte se rovnou v ceně, nic neuplatňujete a na nic nečekáte.',
 				};
-			case 'cashback':
+			case 'voucher':
 				return {
 					eyebrow: 'Členská výhoda',
 					title: 'Voucher po každém pobytu',
@@ -28,8 +28,8 @@
 		}
 	});
 
-	const showDiscount = computed(() => variant.value !== 'cashback');
-	const showCashback = computed(() => variant.value !== 'sleva');
+	const showDiscount = computed(() => variant.value !== 'voucher');
+	const showVoucher = computed(() => variant.value !== 'sleva');
 </script>
 
 <template>
@@ -57,7 +57,7 @@
 				</template>
 			</ComparePlan>
 			<ComparePlan
-				v-if="showCashback"
+				v-if="showVoucher"
 				figure="3,5"
 				title="Voucher na další rezervaci"
 				text="Po každé dokončené rezervaci vám vystavíme jednorázový voucher v hodnotě 3,5 % z ceny objednávky."

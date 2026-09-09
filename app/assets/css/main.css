@@ -22,7 +22,7 @@
 
 	/* Surfaces */
 	--t-surface-app: light-dark(#f4f0e8, #0e1626); /* page background, form fields */
-	--t-surface-nested: light-dark(#ebe5d8, #131d31); /* benefit tiles (Sleva / Cashback) */
+	--t-surface-nested: light-dark(#ebe5d8, #131d31); /* benefit tiles (Sleva / Voucher) */
 	--t-surface-card: light-dark(#fbf9f4, #16213a); /* the registration card */
 	--t-surface-band: light-dark(#ebe5d8, #0e1626); /* the inverse CTA band — only inside theme-inverse */
 

@@ -1,4 +1,4 @@
-<!-- Lead form: e-mail (pre-filled from ?e= when the invitation link carries it) · benefit (two radio tiles in the choice variant, one static tile in sleva / cashback) · consent · submit → POST /api/leads.
+<!-- Lead form: e-mail (pre-filled from ?e= when the invitation link carries it) · benefit (two radio tiles in the choice variant, one static tile in sleva / voucher) · consent · submit → POST /api/leads.
      After a successful submit the form is replaced by a thank-you block: brass seal, what was sent, what happens next,
      and a way back in case of a typo in the e-mail. Emits `done` so the card can drop its own heading.
      Two layouts: stacked inside the registration card (default), or `band` — centered 720px column in the CTA band:
@@ -33,7 +33,7 @@
 	});
 	// Single-benefit variants come pre-selected; with both on offer the visitor has to pick
 	const benefit = ref<LeadPayload['benefit'] | undefined>(
-		variant.value === 'sleva' ? 'discount_3' : variant.value === 'cashback' ? 'cashback_35' : undefined
+		variant.value === 'sleva' ? 'discount_3' : variant.value === 'voucher' ? 'voucher_35' : undefined
 	);
 	const consent = ref(false);
 
@@ -43,7 +43,7 @@
 			hint: 'Nižší cena rovnou při rezervaci, po celou dobu trvání klubu.',
 			figure: '3 %',
 		},
-		cashback_35: {
+		voucher_35: {
 			title: '3,5 % z každé objednávky zpět',
 			hint: 'Po každém pobytu dostanete jednorázový voucher na další rezervaci.',
 			figure: '3,5 %',

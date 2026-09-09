@@ -2,18 +2,18 @@
  * A/B variant of the page. The invitation link carries it once (?v=…); the page then remembers it:
  *   (no param) / ?v=volba → both benefits, the visitor picks one (default)
  *   ?v=sleva    or ?v=a   → the page talks only about the 3 % discount
- *   ?v=cashback or ?v=b   → the page talks only about the 3,5 % cashback
+ *   ?v=voucher  or ?v=b   → the page talks only about the 3,5 % voucher
  * Resolution: URL param → cookie (30 days, so a reload or a later visit keeps the same variant) → default.
  * The value lives in shared state, so it survives the URL clean-up done by plugins/clean-url.client.ts.
  */
-export type Variant = 'both' | 'sleva' | 'cashback';
+export type Variant = 'both' | 'sleva' | 'voucher';
 
 const PARAM_TO_VARIANT: Record<string, Variant> = {
 	volba: 'both',
 	sleva: 'sleva',
 	a: 'sleva',
-	cashback: 'cashback',
-	b: 'cashback',
+	voucher: 'voucher',
+	b: 'voucher',
 };
 
 const COOKIE = 'dzb_v';
@@ -31,6 +31,6 @@ export function useVariant() {
 			cookie.value = fromUrl;
 			return fromUrl;
 		}
-		return cookie.value && cookie.value in { both: 1, sleva: 1, cashback: 1 } ? cookie.value : 'both';
+		return cookie.value && cookie.value in { both: 1, sleva: 1, voucher: 1 } ? cookie.value : 'both';
 	});
 }

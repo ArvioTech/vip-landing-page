@@ -2,9 +2,9 @@
 <script setup lang="ts">
 	const variant = useVariant();
 
-	/** Headline — the cashback variant leads with the voucher instead of "členské ceny" */
+	/** Headline — the voucher variant leads with the voucher instead of "členské ceny" */
 	const headline = computed(() =>
-		variant.value === 'cashback'
+		variant.value === 'voucher'
 			? { a: 'Z každého pobytu 3,5 % zpět.', em: 'Bez hledání slev,', b: 'po celou dobu členství.' }
 			: { a: 'Hotely za členské ceny.', em: 'Bez hledání slev,', b: 'po celou dobu členství.' }
 	);
@@ -14,7 +14,7 @@
 		switch (variant.value) {
 			case 'sleva':
 				return 'V klubu rezervujete hotely se slevou 3 % na každé objednávce. Zanechte e‑mail, my ověříme váš přístup a pošleme vám přihlášení do portálu.';
-			case 'cashback':
+			case 'voucher':
 				return 'V klubu dostanete z každé rezervace hotelu 3,5 % zpět formou voucheru. Zanechte e‑mail, my ověříme váš přístup a pošleme vám přihlášení do portálu.';
 			default:
 				return 'V klubu rezervujete hotely s výhodou na každé objednávce. Zanechte e‑mail, vyberte výhodu, která vám dává větší smysl, a my ověříme váš přístup.';
@@ -25,7 +25,7 @@
 		switch (variant.value) {
 			case 'sleva':
 				return 'Sleva 3 % na všechny objednávky po celou dobu trvání klubu, nejen na první.';
-			case 'cashback':
+			case 'voucher':
 				return '3,5 % z každé objednávky zpět formou voucheru, po celou dobu trvání klubu.';
 			default:
 				return 'Sleva 3 % nebo voucher 3,5 % – platí na všechny objednávky po celou dobu trvání klubu, nejen na první.';
@@ -38,7 +38,7 @@
 		class="grid items-start gap-10 pt-11 pb-14 desktop:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] desktop:gap-14 desktop:pt-16 desktop:pb-18"
 	>
 		<div>
-			<CommonEyebrow>Uzavřený klub pro rezervace hotelů</CommonEyebrow>
+			<CommonEyebrow>Premium klub pro dovolenou s benefity</CommonEyebrow>
 			<h1 class="mt-3.5 mb-5.5 font-display text-hero font-normal tracking-display text-balance">
 				{{ headline.a }} <em class="text-brass">{{ headline.em }}</em> {{ headline.b }}
 			</h1>
