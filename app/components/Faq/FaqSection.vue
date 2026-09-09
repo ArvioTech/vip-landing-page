@@ -36,7 +36,7 @@
 		},
 		variantQuestion.value,
 		{
-			q: 'Jak dlouho klub trvá?',
+			q: 'Jak dlouho můžu využívat výhody?',
 			a: 'Výhody platí po celou dobu trvání klubu. Podmínky a délku členství vám pošleme spolu s přístupem do portálu.',
 		},
 	]);

@@ -30,6 +30,22 @@
 
 	const showDiscount = computed(() => variant.value !== 'voucher');
 	const showVoucher = computed(() => variant.value !== 'sleva');
+
+	/** Bullet points — the comparative wording („nejjednodušší", „vyšší") only makes sense when both tiles are shown */
+	const discountPoints = computed(() => [
+		'Platí na každou rezervaci po dobu členství',
+		'Vidíte ji rovnou v ceně pokoje',
+		single.value ? 'Čím častěji cestujete, tím více ušetříte' : 'Nejjednodušší varianta pro časté cesty',
+	]);
+	const voucherPoints = computed(() =>
+		single.value
+			? [
+					'Platí na každý pobyt po dobu členství',
+					'Voucher dostanete po skončení pobytu',
+					'Uplatníte ho na kteroukoli další rezervaci',
+				]
+			: ['Vyšší celková výhoda', 'Voucher uplatníte na další rezervaci', 'Vhodné, když plánujete více pobytů']
+	);
 </script>
 
 <template>
@@ -44,12 +60,8 @@
 				v-if="showDiscount"
 				figure="3"
 				title="Sleva na všechny objednávky"
-				text="Členská cena se odečte přímo při rezervaci. Nic neschraňujete, nic neuplatňujete."
-				:points="[
-					'Platí na každou rezervaci po dobu členství',
-					'Vidíte ji rovnou v ceně pokoje',
-					'Nejjednodušší varianta pro časté cesty',
-				]"
+				text="Členská cena se odečte přímo při rezervaci. Nic nesbíráte, nic neuplatňujete."
+				:points="discountPoints"
 			>
 				<template #example>
 					Příklad: pobyt za <b class="font-semibold text-primary tabular-nums">12 000 Kč</b> zaplatíte
@@ -60,12 +72,8 @@
 				v-if="showVoucher"
 				figure="3,5"
 				title="Voucher na další rezervaci"
-				text="Po každé dokončené rezervaci vám vystavíme jednorázový voucher v hodnotě 3,5 % z ceny objednávky."
-				:points="[
-					'Vyšší celková výhoda',
-					'Voucher uplatníte na další rezervaci',
-					'Vhodné, když plánujete více pobytů',
-				]"
+				text="Po každém dokončeném pobytu vám vystavíme jednorázový voucher v hodnotě 3,5 % z ceny objednávky."
+				:points="voucherPoints"
 			>
 				<template #example>
 					Příklad: po pobytu za <b class="font-semibold text-primary tabular-nums">12 000 Kč</b> získáte

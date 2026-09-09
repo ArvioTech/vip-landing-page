@@ -13,11 +13,11 @@
 	const lead = computed(() => {
 		switch (variant.value) {
 			case 'sleva':
-				return 'V klubu rezervujete hotely se slevou 3 % na každé objednávce. Zanechte e‑mail, my ověříme váš přístup a pošleme vám přihlášení do portálu.';
+				return 'V klubu rezervujete hotely se slevou 3 % na každé objednávce. Stačí přijmout pozvání a zanechat e‑mail. My vám připravíme účet a pošleme přihlášení do portálu.';
 			case 'voucher':
-				return 'V klubu dostanete z každé rezervace hotelu 3,5 % zpět formou voucheru. Zanechte e‑mail, my ověříme váš přístup a pošleme vám přihlášení do portálu.';
+				return 'V klubu dostanete z každého pobytu v hotelu 3,5 % zpět formou voucheru. Stačí přijmout pozvání a zanechat e‑mail. My vám připravíme účet a pošleme přihlášení do portálu.';
 			default:
-				return 'V klubu rezervujete hotely s výhodou na každé objednávce. Zanechte e‑mail, vyberte výhodu, která vám dává větší smysl, a my ověříme váš přístup.';
+				return 'V klubu rezervujete hotely s výhodou na každé objednávce. Stačí přijmout pozvání, zanechat e‑mail a vybrat výhodu, která vám dává větší smysl. My vám připravíme účet a pošleme přihlášení do portálu.';
 		}
 	});
 

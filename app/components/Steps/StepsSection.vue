@@ -12,8 +12,8 @@
 			title: 'Zájem',
 			text:
 				variant.value === 'both'
-					? 'Zanecháte e‑mail a vyberete výhodu, která vám sedí víc. Zabere to půl minuty.'
-					: 'Zanecháte e‑mail a potvrdíte zájem. Zabere to půl minuty.',
+					? 'Přijmete pozvání: zanecháte e‑mail a vyberete výhodu, která vám sedí víc. Zabere to půl minuty.'
+					: 'Přijmete pozvání: stačí zanechat e‑mail. Zabere to půl minuty.',
 			now: true,
 		},
 		{

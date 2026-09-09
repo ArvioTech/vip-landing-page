@@ -8,7 +8,7 @@
 			case 'sleva':
 				return 'Nic neplatíte, k ničemu se nezavazujete. Sleva 3 % platí na každou rezervaci po celou dobu klubu.';
 			case 'voucher':
-				return 'Nic neplatíte, k ničemu se nezavazujete. Voucher 3,5 % dostanete z každé rezervace po celou dobu klubu.';
+				return 'Nic neplatíte, k ničemu se nezavazujete. Voucher 3,5 % dostanete po každém pobytu po celou dobu klubu.';
 			default:
 				return 'Nic neplatíte, k ničemu se nezavazujete. Vybraná výhoda platí na každou rezervaci po celou dobu klubu.';
 		}
