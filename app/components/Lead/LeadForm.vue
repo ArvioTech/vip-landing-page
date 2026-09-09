@@ -244,22 +244,31 @@
 		</fieldset>
 
 		<label
-			class="grid grid-cols-[18px_1fr] gap-3 text-caption text-secondary"
+			class="grid cursor-pointer grid-cols-[18px_1fr] gap-3 text-caption text-secondary"
 			:class="band ? 'order-3 mx-auto mt-5 max-w-[560px]' : 'order-4 mt-5.5'"
 		>
-			<input v-model="consent" type="checkbox" name="consent" required class="mt-0.5 size-4.5 accent-brass" />
+			<input
+				v-model="consent"
+				type="checkbox"
+				name="consent"
+				required
+				class="mt-0.5 size-4.5 cursor-pointer accent-brass"
+			/>
 			<span>
 				Souhlasím, abyste mě ohledně členství v klubu kontaktovali e‑mailem nebo telefonicky. Údaje použijete
 				jen k ověření zájmu a přístupu.
 			</span>
 		</label>
 
+		<!-- Error box: filled and framed in danger so it reads at a glance, not just a red line of small text -->
 		<p
-			class="mt-3 text-caption text-danger empty:hidden"
-			:class="band ? 'order-4 text-center' : 'order-6'"
+			v-if="error"
+			class="mt-4 flex items-start gap-2.5 rounded-field border border-danger bg-danger-soft px-4 py-3 text-meta font-medium text-danger"
+			:class="band ? 'order-4 text-left' : 'order-6'"
 			role="alert"
 		>
-			{{ error }}
+			<IconAlert class="mt-0.5 size-5 shrink-0" />
+			<span>{{ error }}</span>
 		</p>
 		<p v-if="!band" class="order-7 mt-3.5 text-center text-label text-muted">
 			Ozveme se, jakmile váš účet ověříme. Žádný newsletter.

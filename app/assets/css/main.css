@@ -44,6 +44,7 @@
 	/* States */
 	--t-success: light-dark(#2f6b4f, #7fc9a3);
 	--t-danger: light-dark(#a23b2e, #e28b7e);
+	--t-danger-soft: light-dark(rgb(162 59 46 / 0.1), rgb(226 139 126 / 0.14)); /* form error box fill */
 
 	/* Card shadow — the only shadow in the design */
 	--t-shadow-card:
@@ -117,6 +118,7 @@
 
 	--color-success: var(--t-success);
 	--color-danger: var(--t-danger);
+	--color-danger-soft: var(--t-danger-soft);
 
 	--shadow-*: initial;
 	--shadow-card: var(--t-shadow-card);
