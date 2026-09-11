@@ -263,7 +263,13 @@
 			</span>
 			<span>
 				Souhlasím, abyste mě ohledně členství v klubu kontaktovali e‑mailem nebo telefonicky. Údaje použijeme
-				jen k ověření zájmu a přístupu.
+				jen k ověření zájmu a přístupu, více v
+				<a
+					href="/documents/zasady-ochrany-osobnich-udaju.pdf"
+					target="_blank"
+					rel="noopener"
+					class="font-semibold text-brass underline decoration-brass/40 underline-offset-3 hover:decoration-brass"
+				>zásadách ochrany osobních údajů</a>.
 			</span>
 		</label>
 

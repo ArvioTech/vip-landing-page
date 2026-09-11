@@ -5,7 +5,7 @@
 	<footer class="flex flex-wrap justify-between gap-5 border-t border-line pt-7 pb-11 text-caption text-muted">
 		<p>Premium Dovolená za benefity · Vstup pouze na pozvání</p>
 		<p>
-			<NuxtLink to="/ochrana-osobnich-udaju" class="hover:text-primary">Ochrana osobních údajů</NuxtLink>
+			<a href="/documents/zasady-ochrany-osobnich-udaju.pdf" target="_blank" rel="noopener" class="hover:text-primary">Zásady ochrany osobních údajů</a>
 			·
 			<a href="mailto:info@dovolena-za-benefity.cz" class="hover:text-primary">Kontakt</a>
 		</p>
